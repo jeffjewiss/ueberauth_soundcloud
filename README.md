@@ -1,6 +1,7 @@
 # Überauth SoundCloud
 
 > SoundCloud OAuth2 strategy for Überauth.
+> Forked and adapted from Ueberauth's Github strategy: https://github.com/ueberauth/ueberauth_github
 
 ## Installation
 
@@ -72,14 +73,14 @@ Depending on the configured url you can initial the request through:
 
 Or with options:
 
-    /auth/soundcloud?scope=user,public_repo
+    /auth/soundcloud?scope=email
 
-By default the requested scope is "user,public\_repo". Scope can be configured either explicitly as a `scope` query value on the request path or in your configuration:
+By default scope is omitted; it doesn't seem to do anything... Scope can be configured either explicitly as a `scope` query value on the request path or in your configuration:
 
 ```elixir
 config :ueberauth, Ueberauth,
   providers: [
-    soundcloud: {Ueberauth.Strategy.Soundcloud, [default_scope: "user,public_repo,notifications"]}
+    soundcloud: {Ueberauth.Strategy.Soundcloud, [default_scope: "email"]}
   ]
 ```
 
