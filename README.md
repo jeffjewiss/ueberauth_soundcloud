@@ -36,8 +36,8 @@
 
     ```elixir
     config :ueberauth, Ueberauth.Strategy.Soundcloud.OAuth,
-      client_id: System.get_env("GITHUB_CLIENT_ID"),
-      client_secret: System.get_env("GITHUB_CLIENT_SECRET")
+      client_id: System.get_env("SOUNDCLOUD_CLIENT_ID"),
+      client_secret: System.get_env("SOUNDCLOUD_CLIENT_SECRET")
     ```
 
 1.  Include the Überauth plug in your controller:
