@@ -37,8 +37,10 @@
     ```elixir
     config :ueberauth, Ueberauth.Strategy.Soundcloud.OAuth,
       client_id: System.get_env("SOUNDCLOUD_CLIENT_ID"),
-      client_secret: System.get_env("SOUNDCLOUD_CLIENT_SECRET")
+      client_secret: System.get_env("SOUNDCLOUD_CLIENT_SECRET"),
+      redirect_uri: "http://127.0.0.1:4000/auth/soundcloud/callback", 
     ```
+    *Quick note: SoundCloud has historically been grumpy about "localhost" addresses in the redirect_uri; if you have problems, try switching to "127.0.0.1" instead.*
 
 1.  Include the Überauth plug in your controller:
 
