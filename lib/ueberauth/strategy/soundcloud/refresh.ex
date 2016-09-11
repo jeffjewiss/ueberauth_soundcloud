@@ -1,6 +1,6 @@
-defmodule Ueberauth.Strategy.Soundcloud.OAuth do
+defmodule Ueberauth.Strategy.Soundcloud.OAuth.Refresh do
   @moduledoc """
-  An implementation of OAuth2 for soundcloud.
+  An implementation of OAuth2 Refresh Strategy for soundcloud.
 
   To add your `client_id` and `client_secret` include these values in your configuration.
 
@@ -40,28 +40,22 @@ defmodule Ueberauth.Strategy.Soundcloud.OAuth do
   @doc """
   Provides the authorize url for the request phase of Ueberauth. No need to call this usually.
   """
-  def authorize_url!(params \\ [], opts \\ []) do
-    client(opts)
-    |> OAuth2.Client.authorize_url!(params)
+  def authorize_url(_client, _params) do
+    raise OAuth2.Error, reason: "This strategy does not implement `authorize_url`."
   end
 
-  def get_token!(params \\ [], options \\ %{}) do
+  def get_token!(token, params \\ [], options \\ %{}) do
     headers = Dict.get(options, :headers, [])
     options = Dict.get(options, :options, [])
     client_options = Dict.get(options, :client_options, [])
     c = client(client_options)
+      |> OAuth2.Strategy.Refresh.get_token([refresh_token: token.refresh_token], [])
     OAuth2.Client.get_token!(c, params, headers, options)
-  end
-
-  # Strategy Callbacks
-
-  def authorize_url(client, params) do
-    OAuth2.Strategy.AuthCode.authorize_url(client, params)
   end
 
   def get_token(client, params, headers) do
     client
     |> put_header("Accept", "application/json")
-    |> OAuth2.Strategy.AuthCode.get_token(params, headers)
+    |> OAuth2.Strategy.Refresh.get_token(params, headers)
   end
 end
